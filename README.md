@@ -14,7 +14,8 @@ default: 7.5,6.1
 Edit Dockerfile for any other customizations (see [DockerHub](https://hub.docker.com/r/nvidia/cuda/) for available base images/CUDA versions)
 
 Build:
-	pass three parameters:
+
+Pass three parameters:
 - CUDA version
 - cuDNN version
 - Tensorflow build tag
