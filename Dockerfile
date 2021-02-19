@@ -27,10 +27,12 @@ RUN pip3 install --upgrade pip
 RUN mkdir /root/.ssh
 ADD id_rsa /root/.ssh/id_rsa
 ADD id_rsa.pub /root/.ssh/id_rsa.pub
+ADD config /root/.ssh/config
 
 RUN chmod 700 ~/.ssh
 RUN chmod 600 ~/.ssh/id_rsa
 RUN chmod 644 ~/.ssh/id_rsa.pub
+RUN chmod 644 ~/.ssh/config
 
 # Install Go
 RUN wget https://dl.google.com/go/go1.16.linux-amd64.tar.gz
