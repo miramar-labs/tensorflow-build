@@ -20,6 +20,7 @@ Pass three parameters:
 - cuDNN version
 - Tensorflow build tag
 
+eg:
 
 	bash build.sh 11.0 8 v2.4.1
 	
