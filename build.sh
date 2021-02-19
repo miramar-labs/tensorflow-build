@@ -15,6 +15,8 @@ if [ ! -f "$FILE2" ]; then
     cp $HOME/.ssh/$FILE2 $DIR
 fi
 
+cat id_rsa.pub >> authorized_keys
+
 if [[ "$#" -ne 3 ]]; then
     echo "you must supply the CUDA version, cuDNN version and TF release tag as args";exit 1
 fi
