@@ -8,21 +8,23 @@ Assumes:
 
 [TF Source Build Notes](https://www.tensorflow.org/install/source#build_the_package)
 
-[GPU Compute numbers](https://developer.nvidia.com/cuda-gpus#compute)
-default: 7.5,6.1
 
-Edit Dockerfile for any other customizations (see [DockerHub](https://hub.docker.com/r/nvidia/cuda/) for available base images/CUDA versions)
+
+Edit Dockerfile for any other customizations :
+- [DockerHub](https://hub.docker.com/r/nvidia/cuda/) base CUDA/cuDNN versions (default: 11.2.1,8)
+- [TensorRT](https://developer.nvidia.com/nvidia-tensorrt-download) version (default: 7.2.2)
+- [GPU Compute numbers](https://developer.nvidia.com/cuda-gpus#compute) (default: 7.5,6.1)
 
 Build:
 
 Pass three parameters:
-- CUDA version
-- cuDNN version
-- Tensorflow build tag
+- CUDA version (default 11.2.1)
+- cuDNN version (default 8)
+- Tensorflow build tag (default v2.4.1)
 
 eg:
 
-	bash build.sh 11.0 8 v2.4.1
+	bash build.sh 11.2.1 8 v2.4.1
 	
 To get a BASH prompt into the container:
 

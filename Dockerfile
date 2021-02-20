@@ -1,7 +1,7 @@
-ARG CUDAVER=whatever
-ARG CUDNNVER=whatever
+ARG CUDAVER=11.2
+ARG CUDNNVER=8
 FROM nvidia/cuda:$CUDAVER-cudnn$CUDNNVER-devel-ubuntu18.04
-ARG TFVER
+ARG TFVER=2.4.1
 ARG CUDAVER
 ARG CUDNNVER
 
@@ -55,20 +55,27 @@ RUN pip3 install h5py
 RUN go get github.com/bazelbuild/bazelisk
 RUN mv `which bazelisk` /usr/local/bin/bazel
 
+# Install TensorRT
+RUN wget https://developer.nvidia.com/compute/machine-learning/tensorrt/secure/7.2.2/local_repos/nv-tensorrt-repo-ubuntu1804-cuda11.1-trt7.2.2.3-ga-20201211_1-1_amd64.deb
+RUN dpkg -i nv-tensorrt-repo-ubuntu1804-cuda11.1-trt7.2.2.3-ga-20201211_1-1_amd64.deb
+
 # Get TF sources
 RUN git clone --depth 1 --branch $TFVER git@github.com:tensorflow/tensorflow.git
 
 # Set env vars for configure
+ENV TF_NEED_CUDA=1
+ENV TF_NEED_TENSORRT=1
 ENV TF_CUDA_VERSION=$CUDAVER
 ENV TF_CUDNN_VERSION=$CUDNNVER
-ENV PYTHON_BIN_PATH=/usr/bin/python
-ENV PYTHON_LIB_PATH=/usr/local/lib/python3.6/dist-packages
+ENV TF_TENSORRT_VERSION=7.2.2
 ENV CUDA_TOOLKIT_PATH="/usr/local/cuda-$CUDAVER"
 ENV CUDNN_INSTALL_PATH=/usr
+ENV TF_CUDA_COMPUTE_CAPABILITIES=7.5,6.1
+
+ENV PYTHON_BIN_PATH=/usr/bin/python
+ENV PYTHON_LIB_PATH=/usr/local/lib/python3.6/dist-packages
 ENV TF_NEED_ROCM=0
 ENV TF_NEED_GCP=0
-ENV TF_NEED_CUDA=1
-ENV TF_CUDA_COMPUTE_CAPABILITIES=7.5,6.1
 ENV TF_NEED_HDFS=0
 ENV TF_NEED_OPENCL=0
 ENV TF_NEED_JEMALLOC=1
@@ -87,7 +94,6 @@ ENV TF_NEED_COMPUTECPP=0
 ENV GCC_HOST_COMPILER_PATH=/usr/bin/gcc
 ENV CC_OPT_FLAGS="-march=native"
 ENV TF_NEED_KAFKA=0
-ENV TF_NEED_TENSORRT=0
 ENV GCC_HOST_COMPILER_PATH=/usr/bin/gcc
 ENV CC_OPT_FLAGS="-march=native"
 
