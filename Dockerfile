@@ -9,7 +9,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update
 RUN apt-get -y upgrade
-RUN apt-get install -y apt-utils wget tree git vim curl
+RUN apt-get install -y apt-utils wget tree git vim curl mlocate
 
 # Install dev tools
 RUN apt-get install -y build-essential
