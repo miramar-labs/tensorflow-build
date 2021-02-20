@@ -8,7 +8,19 @@ Assumes:
 
 [TF Source Build Notes](https://www.tensorflow.org/install/source#build_the_package)
 
+[TFX Sources Notes](https://github.com/tensorflow/tfx)
 
+[NVIDIA Drivers](https://www.nvidia.com/en-us/drivers/unix/): Driver Version: 460.39
+
+[CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit): 
+
+`sudo sh cuda_11.2.1_460.32.03_linux.run`
+
+[cuDNN](https://developer.nvidia.com/rdp/cudnn-download):
+
+`sudo dpkg -i libcudnn8_8.1.0.77-1+cuda11.2_amd64.deb`
+
+`sudo dpkg -i libcudnn8-dev_8.1.0.77-1+cuda11.2_amd64.deb`
 
 Edit Dockerfile for any other customizations :
 - [DockerHub](https://hub.docker.com/r/nvidia/cuda/) base CUDA/cuDNN versions (default: 11.2.1,8)
@@ -18,13 +30,13 @@ Edit Dockerfile for any other customizations :
 Build:
 
 Pass three parameters:
-- CUDA version (default 11.2.1)
+- CUDA version (default 11.2)
 - cuDNN version (default 8)
-- Tensorflow build tag (default v2.4.1)
+- Tensorflow build tag (default v2.4.0)
 
 eg:
 
-	bash build.sh 11.2.1 8 v2.4.1
+	bash build.sh 11.2 8 v2.4.0
 	
 To get a BASH prompt into the container:
 
@@ -75,4 +87,3 @@ Example Output on success:
 	2021-02-16 22:39:26.177548: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
 	2021-02-16 22:39:26.177926: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
 	Tensorflow - Num GPUs Available:  1
-

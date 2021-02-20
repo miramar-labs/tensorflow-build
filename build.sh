@@ -15,8 +15,4 @@ if [ ! -f "$FILE2" ]; then
     cp $HOME/.ssh/$FILE2 $DIR
 fi
 
-if [[ "$#" -ne 3 ]]; then
-    echo "you must supply the CUDA,cuDNN versions and TF release tag as args";exit 1
-fi
-
-make CUDAVER=$1 CUDNNVER=$2 TFVER=$3
+make

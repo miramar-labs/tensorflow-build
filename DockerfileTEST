@@ -1,4 +1,9 @@
+#ARG CUDAVER=11.2
+#ARG CUDNNVER=8
 FROM nvidia/cuda:11.2.1-cudnn8-devel-ubuntu18.04
+#ARG TFVER=2.4.1
+#ARG CUDAVER
+#ARG CUDNNVER
 
 MAINTAINER Aaron Cody <aaron@aaroncody.com>
 
@@ -9,16 +14,15 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update
 RUN apt-get -y upgrade
-RUN apt-get install -y apt-utils wget tree git vim curl
+RUN apt-get install -y apt-utils wget tree git
 
 # Install dev tools
 RUN apt-get install -y build-essential
 
-# Install pip3
+# Python Stuff
 RUN apt install -y python3-pip
 RUN pip3 install --upgrade pip
 RUN link /usr/bin/python3 /usr/bin/python
-RUN link /usr/bin/pip3 /usr/bin/pip
 
 # Set up SSH
 RUN mkdir /root/.ssh
@@ -55,7 +59,7 @@ RUN mv `which bazelisk` /usr/local/bin/bazel
 #RUN dpkg -i nv-tensorrt-repo-ubuntu1804-cuda11.1-trt7.2.2.3-ga-20201211_1-1_amd64.deb
 
 # Get TF sources
-RUN git clone --depth 1 --branch v2.4.0 git@github.com:tensorflow/tensorflow.git
+RUN git clone --depth 1 --branch v2.4.1 git@github.com:tensorflow/tensorflow.git
 
 # Set env vars for configure
 ENV TF_NEED_CUDA=1
@@ -98,17 +102,3 @@ ENV TF_ROOT=/tensorflow
 WORKDIR $TF_ROOT
 RUN ./configure
 
-# build entire package
-RUN bazel build --config=cuda //tensorflow/tools/pip_package:build_pip_package
-
-# build c++ library
-#TODO RUN bazel build --config=cuda  tensorflow:libtensorflow_cc.so
-
-# build from release branch
-RUN bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
-
-# OR, build nightly:
-#TODO RUN bazel-bin/tensorflow/tools/pip_package/build_pip_package --nightly_flag /tmp/tensorflow_pkg
-
-# Install wheel
-RUN pip3 install /tmp/tensorflow_pkg/tensorflow-2.4.1-cp36-cp36m-linux_x86_64.whl

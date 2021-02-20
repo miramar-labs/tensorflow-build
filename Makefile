@@ -6,8 +6,11 @@ all: tf-build
 
 .PHONY: tf-build
 tf-build:
-	docker build --no-cache --build-arg CUDAVER=$(CUDAVER) --build-arg CUDNNVER=$(CUDNNVER) --build-arg TFVER=$(TFVER) -t tf-build:$(TAG) -f Dockerfile .
+	docker build --no-cache -t tf-build:$(TAG) -f Dockerfile .
 
+.PHONY: tf-build-test
+tf-build-test:
+	docker build --no-cache -t tf-build:$(TAG) -f DockerfileTEST .
 #------------------------------- RUN TARGETS ----------------------------------------------------------------------
 
 .PHONY: run-tf-build
