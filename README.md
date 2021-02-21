@@ -1,4 +1,4 @@
-### Tensorflow Build Container
+### Tensorflow/TFX/Kubeflow-pl Build Container
 
 Assumes:
 - you are running this container on a machine that has an NVIDIA GPU
@@ -23,20 +23,26 @@ Assumes:
 `sudo dpkg -i libcudnn8-dev_8.1.0.77-1+cuda11.2_amd64.deb`
 
 Edit Dockerfile for any other customizations :
-- [DockerHub](https://hub.docker.com/r/nvidia/cuda/) base CUDA/cuDNN versions (default: 11.2.1,8)
-- [TensorRT](https://developer.nvidia.com/nvidia-tensorrt-download) version (default: 7.2.2)
-- [GPU Compute numbers](https://developer.nvidia.com/cuda-gpus#compute) (default: 7.5,6.1)
+- [DockerHub](https://hub.docker.com/r/nvidia/cuda/) base CUDA/cuDNN versions
+- [TensorRT](https://developer.nvidia.com/nvidia-tensorrt-download) versions
+- [GPU Compute numbers](https://developer.nvidia.com/cuda-gpus#compute) values
+
+### Tensorflow/Python/CUDA version Matrix:
+
+![](tf-versions.png)
+
+### TFX version matrix:
+
+![](tfx-versions.png)
+
+Apache Beam (used by TFX) Python [dependencies](https://beam.apache.org/get-started/quickstart-py/#create-and-activate-a-virtual-environment)
+
+	The Python SDK supports Python 3.6, 3.7, and 3.8. Beam 2.24.0 was the last release with support for Python 2.7 and 3.5
+
 
 Build:
 
-Pass three parameters:
-- CUDA version (default 11.2)
-- cuDNN version (default 8)
-- Tensorflow build tag (default v2.4.0)
-
-eg:
-
-	bash build.sh 11.2 8 v2.4.0
+	bash build.sh 
 	
 To get a BASH prompt into the container:
 
@@ -47,7 +53,7 @@ To run the test:
 	make run-tf-build-test
 	
 
-Example Output on success:
+Example Output on GPU-test success:
 
 	Tue Feb 16 22:39:25 2021       
 	+-----------------------------------------------------------------------------+
