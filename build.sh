@@ -15,4 +15,8 @@ if [ ! -f "$FILE2" ]; then
     cp $HOME/.ssh/$FILE2 $DIR
 fi
 
-make
+if [[ "$#" -ne 1 ]]; then
+    echo "must supply makefile target as arg";exit 1
+fi
+
+make $1
