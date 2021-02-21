@@ -22,6 +22,7 @@ RUN apt install -y python3-pip
 RUN pip3 install --upgrade pip
 RUN link /usr/bin/python3 /usr/bin/python
 RUN link /usr/bin/pip3 /usr/bin/pip
+#RUN python3 -m pip install --upgrade pip
 
 # Set up SSH
 RUN mkdir /root/.ssh
@@ -114,4 +115,17 @@ RUN bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
 #TODO RUN bazel-bin/tensorflow/tools/pip_package/build_pip_package --nightly_flag /tmp/tensorflow_pkg
 
 # Install wheel
-#RUN cd /tmp/tensorflow_pkg/;pip install tensorflow-2.3.0-cp36-cp36m-linux_x86_64.whl
+RUN cd /tmp/tensorflow_pkg/;pip install tensorflow-2.3.0-cp36-cp36m-linux_x86_64.whl
+
+# Install tfx
+RUN pip3 install tfx==0.26.0
+
+# Install kfp
+RUN pip3 install kfp
+
+# Install sample code
+RUN git clone git@github.com:Building-ML-Pipelines/building-machine-learning-pipelines.git
+
+# Set PYTHONPATH
+RUN export PYTHONPATH=~/building-machine-learning-pipelines/pipelines
+

@@ -15,8 +15,8 @@ RUN apt-get install -y apt-utils wget tree git vim curl mlocate
 RUN apt-get install -y build-essential
 
 # Install python 3.6-3.8 and pip
-RUN apt install -y python3.6
-#RUN apt install -y python3.8
+#RUN apt install -y python3.6
+RUN apt install -y python3.8
 RUN apt install -y python3-pip
 RUN pip3 install --upgrade pip
 RUN link /usr/bin/python3 /usr/bin/python
@@ -58,7 +58,7 @@ RUN mv `which bazelisk` /usr/local/bin/bazel
 #RUN dpkg -i nv-tensorrt-repo-ubuntu1804-cuda11.1-trt7.2.2.3-ga-20201211_1-1_amd64.deb
 
 # Get TF sources
-RUN git clone --depth 1 --branch v2.4.0 git@github.com:tensorflow/tensorflow.git
+RUN git clone --depth 1 --branch v2.4.1 git@github.com:tensorflow/tensorflow.git
 
 # Set env vars for configure
 ENV TF_NEED_CUDA=1
@@ -114,10 +114,10 @@ RUN bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
 #TODO RUN bazel-bin/tensorflow/tools/pip_package/build_pip_package --nightly_flag /tmp/tensorflow_pkg
 
 # Install wheel
-RUN cd /tmp/tensorflow_pkg/;pip install tensorflow-2.4.0-cp36-cp36m-linux_x86_64.whl
+RUN cd /tmp/tensorflow_pkg/;pip install tensorflow-2.4.1-cp36-cp36m-linux_x86_64.whl
 
 # Install tfx
-RUN pip3 install tfx==0.26.0
+RUN pip3 install tfx==0.27.0
 
 # Install kfp
 RUN pip3 install kfp
