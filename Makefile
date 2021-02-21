@@ -3,6 +3,11 @@ export SHELL := /bin/bash
 .PHONY: all
 all: tf-build
 
+.PHONY: clean
+clean:
+	docker system prune -a -f
+	docker rmi -f $(docker images -a -q)
+
 #------------------------------- BUILD TARGETS ----------------------------------------------------------------------
 .PHONY: tf-buildpy38tf241
 tf-buildpy38tf241:
