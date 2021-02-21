@@ -42,7 +42,7 @@ Apache Beam (used by TFX) Python [dependencies](https://beam.apache.org/get-star
 
 Build:
 
-	bash build.sh 
+	bash build.sh <target>
 	
 To get a BASH prompt into the container:
 
