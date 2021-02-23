@@ -17,6 +17,13 @@ tf-build-241:
 	docker build --no-cache -t tf-build:v2.4.1 -f Dockerfile241 .
 
 #------------------------------- RUN TARGETS ----------------------------------------------------------------------
+.PHONY: run-tf-build-test-nightly
+run-tf-build-test-nightly:
+	docker run -i tf-build:nightly bash < test.sh
+
+.PHONY: run-tf-build-test-241
+run-tf-build-test-241:
+	docker run -i tf-build:v2.4.1 bash < test.sh
 
 .PHONY: run-tf-build-nightly
 run-tf-build-nightly:

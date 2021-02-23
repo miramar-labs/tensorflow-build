@@ -78,7 +78,7 @@ To get a BASH prompt into the container:
 	
 To run the GPU test:
 
-	make run-tf-build-test
+	make run-tf-build-test-<target>
 	
 
 Example Output on GPU-test success:
