@@ -16,6 +16,10 @@ Assumes:
 
 [driver compat](https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html#cuda-major-component-versions)
 
+Tensorflow is very sensitive to CUDA versions .. so you must check the compatibility matrix and ensure you are using 
+exactly the right version of CUDA/cuDNN
+(eg if it says use 11.0, you likely will see instabilities at runtime with 11.1 or 11.2)
+
 Example (for my Blade laptop):
 
 NVIDIA Driver Version: 460.39
@@ -60,14 +64,13 @@ Edit Dockerfile for any other customizations :
 
 ![](tfx-versions.png)
 
-Apache Beam (used by TFX) Python [dependencies](https://beam.apache.org/get-started/quickstart-py/#create-and-activate-a-virtual-environment)
-
-	The Python SDK supports Python 3.6, 3.7, and 3.8. Beam 2.24.0 was the last release with support for Python 2.7 and 3.5
-
 
 Build:
 
 	bash build.sh <target>
+	- targets:
+		- tf-build-nightly
+		- tf-build-241
 	
 To get a BASH prompt into the container:
 
@@ -120,9 +123,14 @@ Example Output on GPU-test success:
 	Tensorflow - Num GPUs Available:  1
 
 
-### Python Dependency malarkey
+### Apache Beam
 
-TFX depends on Apache Beam and thhings are a little frigaile to say the least - here is what currently works for me:
+TFX depends on Apache Beam so it's good to verify that works independently:
+
+Apache Beam (used by TFX) Python [dependencies](https://beam.apache.org/get-started/quickstart-py/#create-and-activate-a-virtual-environment)
+
+	The Python SDK supports Python 3.6, 3.7, and 3.8. Beam 2.24.0 was the last release with support for Python 2.7 and 3.5
+
 
 On your host machine:
 
@@ -140,9 +148,7 @@ Use [this script](./pyvenv.sh) to create a fresh virtual python environment for 
 	
 	(test wordcount.py: python -m apache_beam.examples.wordcount --input ./wordcount.py --output ./counts)
 	
-	pip install tfx
-	
-	pip install kfp
+
 	
 	
 	
