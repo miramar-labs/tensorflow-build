@@ -149,6 +149,13 @@ Use [this script](./pyvenv.sh) to create a fresh virtual python environment for 
 	(test wordcount.py: python -m apache_beam.examples.wordcount --input ./wordcount.py --output ./counts)
 	
 
+### Local Builds
+
+If you have a machine with a GPU and the right build tools (eg Bazel) plus the correct CUDA/cuDNN SDK versions installed you can build directly on that machine using:
+
+	bash local-build-nightly.sh
+or
 	
+	bash local-build-2.4.1.sh	
 	
 	
