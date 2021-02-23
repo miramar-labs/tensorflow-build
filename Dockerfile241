@@ -1,4 +1,14 @@
-FROM nvidia/cuda:11.0-cudnn8-devel-ubuntu18.04
+ARG CUDA=11.0
+ARG UBUNTU_VERSION=18.04
+ARG ARCH=
+FROM nvidia/cuda${ARCH:+-$ARCH}:${CUDA}-cudnn8-devel-ubuntu${UBUNTU_VERSION}
+ARG ARCH
+ARG CUDA
+ARG CUDNN=8.0.4.30-1
+ARG CUDNN_MAJOR_VERSION=8
+ARG LIB_DIR_PREFIX=x86_64
+ARG LIBNVINFER=7.1.3-1
+ARG LIBNVINFER_MAJOR_VERSION=7
 
 MAINTAINER Aaron Cody <aaron@aaroncody.com>
 
@@ -108,18 +118,17 @@ RUN bazel build --config=cuda //tensorflow/tools/pip_package:build_pip_package
 # build from release branch
 RUN bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
 
-# OR, build nightly:
-#TODO RUN bazel-bin/tensorflow/tools/pip_package/build_pip_package --nightly_flag /tmp/tensorflow_pkg
-
 # Install wheel
 RUN cd /tmp/tensorflow_pkg/;pip3 install tensorflow-2.4.1-cp36-cp36m-linux_x86_64.whl
 
+# [optional]
+
 # Install tfx
-RUN pip3 install tfx==0.27.0
+#RUN pip3 install tfx
 
 # Install kfp
-RUN pip3 install kfp
+#RUN pip3 install kfp
 
 # Install sample code
-RUN git clone git@github.com:Building-ML-Pipelines/building-machine-learning-pipelines.git
+#RUN git clone git@github.com:Building-ML-Pipelines/building-machine-learning-pipelines.git
 
