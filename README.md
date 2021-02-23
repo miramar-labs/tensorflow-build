@@ -12,15 +12,40 @@ Assumes:
 
 [NVIDIA Drivers](https://www.nvidia.com/en-us/drivers/unix/): Driver Version: 460.39
 
-[CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit): 
+[CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit)
 
-`sudo sh cuda_11.2.1_460.32.03_linux.run`
+[driver compat](https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html#cuda-major-component-versions)
 
-[cuDNN](https://developer.nvidia.com/rdp/cudnn-download):
+Example (for my Blade laptop):
 
-`sudo dpkg -i libcudnn8_8.1.0.77-1+cuda11.2_amd64.deb`
+NVIDIA Driver Version: 460.39
 
-`sudo dpkg -i libcudnn8-dev_8.1.0.77-1+cuda11.2_amd64.deb`
+Tensorflow 2.4.1 
+	- CUDA 11.0
+	- cuDNN 8
+
+CUDA closest match to 11.0 was:
+
+	sudo sh cuda_11.0.3_450.51.06_linux.run
+
+TIP: can always install the latest NVidia driver - it is backward compatible with CUDA versions
+
+TIP: get proper CUDA version (ignore nvidia-smi):
+	
+	sudo nvcc --version
+
+[cuDNN](https://developer.nvidia.com/rdp/cudnn-download)
+
+[cuDNN archive](https://developer.nvidia.com/rdp/cudnn-archive)
+
+	sudo dpkg -i libcudnn8_8.0.5.39-1+cuda11.0_amd64.deb  
+	sudo dpkg -i libcudnn8-dev_8.0.5.39-1+cuda11.0_amd64.deb    (for ubu20.04)
+
+or
+
+	libcudnn8_8.0.4.30-1+cuda11.0_amd64.deb
+	libcudnn8-dev_8.0.4.30-1+cuda11.0_amd64.deb    		    (for ubu18.04)
+
 
 Edit Dockerfile for any other customizations :
 - [DockerHub](https://hub.docker.com/r/nvidia/cuda/) base CUDA/cuDNN versions
@@ -93,3 +118,31 @@ Example Output on GPU-test success:
 	2021-02-16 22:39:26.177548: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
 	2021-02-16 22:39:26.177926: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
 	Tensorflow - Num GPUs Available:  1
+
+
+### Python Dependency malarkey
+
+TFX depends on Apache Beam and thhings are a little frigaile to say the least - here is what currently works for me:
+
+On your host machine:
+
+	sudo apt update
+	sudo apt-get install -y build-essentials libffi-dev libssl-dev libbz2-dev liblzma-dev 
+	sudo apt install python3-dev python3-pip python3-venv
+	
+Use [this script](./pyvenv.sh) to create a fresh virtual python environment for a particular python version:
+
+	bash pyvenv.sh 3.8.0 .
+	
+	. ./venv3.8.0/bin/activate
+	
+	pip install apache_beam
+	
+	(test wordcount.py: python -m apache_beam.examples.wordcount --input ./wordcount.py --output ./counts)
+	
+	pip install tfx
+	
+	pip install kfp
+	
+	
+	

@@ -6,9 +6,12 @@ all: tf-build
 .PHONY: clean
 clean:
 	docker system prune -a -f
-	docker rmi -f $(docker images -a -q)
 
 #------------------------------- BUILD TARGETS ----------------------------------------------------------------------
+.PHONY: tf-build
+tf-build:
+	docker build --no-cache -t tf-build:latest -f DockerfileLATEST .
+
 .PHONY: tf-buildpy38tf241
 tf-buildpy38tf241:
 	docker build --no-cache -t tf-build:py38tf241 -f Dockerfile241 .
@@ -25,6 +28,10 @@ tf-buildpy35tf230:
 tf-build-test:
 	docker build --no-cache -t tf-build:TEST -f DockerfileTEST .
 #------------------------------- RUN TARGETS ----------------------------------------------------------------------
+
+.PHONY: run-tf-build
+run-tf-build:
+	docker run -it tf-build:latest /bin/bash
 
 .PHONY: run-tf-buildpy38tf241
 run-tf-buildpy38tf241:
