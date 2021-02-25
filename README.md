@@ -20,7 +20,7 @@ Tensorflow is very sensitive to CUDA versions .. so you must check the compatibi
 exactly the right version of CUDA/cuDNN
 (eg if it says use 11.0, you likely will see instabilities at runtime with 11.1 or 11.2)
 
-Example (for my Blade laptop):
+Example (for my Razer Blade laptop):
 
 NVIDIA Driver Version: 460.39
 
@@ -32,11 +32,11 @@ CUDA closest match to 11.0 was:
 
 	sudo sh cuda_11.0.3_450.51.06_linux.run
 
-TIP: can always install the latest NVidia driver - it is backward compatible with CUDA versions
+TIP: can always install the latest NVidia driver - it is backward compatible with older CUDA versions
 
 TIP: get proper CUDA version (ignore nvidia-smi):
 	
-	sudo nvcc --version
+	nvcc --version | grep cuda
 
 [cuDNN](https://developer.nvidia.com/rdp/cudnn-download)
 
